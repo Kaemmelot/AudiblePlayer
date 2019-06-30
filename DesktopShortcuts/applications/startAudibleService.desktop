@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Start Audible Service
+Comment=Start the Audible Service
+GenericName=Start the Audible Service
+Icon=/usr/share/icons/nuvola2/play.png
+Exec=termit --execute="bash -c 'sudo systemctl start AudibleControl.service;read -p \\"Press any key to continue...\\"'"
+Terminal=false
+StartupNotify=true
+Categories=AudibleControl

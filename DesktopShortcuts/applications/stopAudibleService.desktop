@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Stop Audible Service
+Comment=Stop the Audible Service
+GenericName=Stop the Audible Service
+Icon=/usr/share/icons/nuvola2/stop.png
+Exec=termit --execute="bash -c 'sudo systemctl stop AudibleControl.service;read -p \\"Press any key to continue...\\"'"
+Terminal=false
+StartupNotify=true
+Categories=AudibleControl

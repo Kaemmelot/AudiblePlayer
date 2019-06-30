@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=View Todays Audible Log
+Comment=View Audible log of today
+GenericName=View Todays Audible Log
+Icon=/usr/share/icons/nuvola2/package_editors.png
+Exec=leafpad /var/log/AudibleControl.log
+Terminal=false
+StartupNotify=true
+Categories=AudibleControl

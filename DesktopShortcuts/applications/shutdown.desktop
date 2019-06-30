@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Shutdown
+Comment=Shutdown
+GenericName=Shutdown
+Icon=/usr/share/icons/nuvola2/exit.png
+Exec=sudo shutdown -h now
+Terminal=false
+StartupNotify=true
+Categories=AudibleControl

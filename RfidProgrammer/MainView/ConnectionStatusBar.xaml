@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="RfidProgrammer.MainView.ConnectionStatusBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:view="clr-namespace:RfidProgrammer.MainView"
+             prism:ViewModelLocator.AutoWireViewModel="False"
+             mc:Ignorable="d" x:Name="CurrentStatusBar"
+             d:DesignHeight="30" d:DesignWidth="800">
+    <UserControl.Resources>
+        <view:ProgrammerStateLedConverter x:Key="ProgrammerStateLedConverter" />
+        <view:ProgrammerStateTextConverter x:Key="ProgrammerStateTextConverter" />
+    </UserControl.Resources>
+    <StatusBar Height="30" Margin="0">
+        <StatusBarItem>
+            <Ellipse x:Name="StatusLED" Fill="{Binding State, Mode=OneWay, Converter={StaticResource ProgrammerStateLedConverter}}" HorizontalAlignment="Right" Height="20" VerticalAlignment="Center" Width="20" Stroke="#BF000000" />
+        </StatusBarItem>
+        <StatusBarItem>
+            <Label x:Name="StatusLabel" Content="{Binding State, Mode=OneWay, Converter={StaticResource ProgrammerStateTextConverter}}" HorizontalAlignment="Left" Height="20" Padding="0" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+        </StatusBarItem>
+        <StatusBarItem HorizontalAlignment="Right">
+            <Border BorderBrush="Black" BorderThickness="1" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" MinWidth="30" Padding="5,0" Cursor="{Binding ComCursor, Mode=OneWay, ElementName=CurrentStatusBar}" MouseDown="Border_MouseDown">
+                <Label Content="{Binding CurrentPort, Mode=OneWay}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" />
+            </Border>
+        </StatusBarItem>
+    </StatusBar>
+</UserControl>

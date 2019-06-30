@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Link
+Name=View Current Audible Log
+Icon=/usr/share/icons/nuvola2/package_editors.png
+URL=/home/pi/.local/share/applications/logCurrentAudibleService.desktop

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=View Previous Audible Log
+Comment=View prevoius Audible log (yesterday)
+GenericName=View Previous Audible Log
+Icon=/usr/share/icons/nuvola2/kwrite.png
+Exec=leafpad /var/log/AudibleControl.log.1
+Terminal=false
+StartupNotify=true
+Categories=AudibleControl

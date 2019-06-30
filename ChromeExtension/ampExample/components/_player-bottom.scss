@@ -1,0 +1,14 @@
+/**
+ * This style is a modified copy of the amplitudejs blue-playlist example (https://521dimensions.com/open-source/amplitudejs/examples/blue-playlist).
+ */
+
+div#amplitude-bottom {
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+
+  div#volume-container:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

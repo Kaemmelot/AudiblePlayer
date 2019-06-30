@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Link
+Name=View Previous Audible Log
+Icon=/usr/share/icons/nuvola2/kwrite.png
+URL=/home/pi/.local/share/applications/logPreviousAudibleService.desktop

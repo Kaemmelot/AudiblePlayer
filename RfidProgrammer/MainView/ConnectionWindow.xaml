@@ -1,0 +1,45 @@
+﻿<Window x:Class="RfidProgrammer.MainView.ConnectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:view="clr-namespace:RfidProgrammer.MainView"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:ports="clr-namespace:System.IO.Ports;assembly=System"
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
+        Title="Connection" Height="250" Width="300">
+    <Window.Resources>
+        <view:EnumStringConverter x:Key="EnumStringConverter" />
+    </Window.Resources>
+    <Grid>
+        <Label Content="COM Port:" HorizontalAlignment="Left" Margin="11,10,0,0" VerticalAlignment="Top" Padding="0" />
+        <ComboBox HorizontalAlignment="Left" Margin="70,7,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailablePorts, Mode=OneWay}" SelectedItem="{Binding SelectedPort, Mode=TwoWay}" />
+        <Label Content="Baudrate:" HorizontalAlignment="Left" Margin="15,37,0,0" VerticalAlignment="Top" Padding="0" />
+        <ComboBox HorizontalAlignment="Left" Margin="70,34,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableBaudRates, Mode=OneWay}" SelectedItem="{Binding SelectedBaudRate, Mode=TwoWay}" />
+        <Label Content="DataBits:" HorizontalAlignment="Left" Margin="19,64,0,0" VerticalAlignment="Top" Padding="0" />
+        <ComboBox HorizontalAlignment="Left" Margin="70,61,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableDataBits, Mode=OneWay}" SelectedItem="{Binding SelectedDataBits, Mode=TwoWay}" />
+        <Label Content="Parity:" HorizontalAlignment="Left" Margin="33,91,0,0" VerticalAlignment="Top" Padding="0" />
+        <ComboBox HorizontalAlignment="Left" Margin="70,88,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableParities, Mode=OneWay}" SelectedItem="{Binding SelectedParity, Mode=TwoWay}">
+            <!--, Converter={StaticResource EnumStringConverter}, ConverterParameter={x:Static ports:Parity.None}-->
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Converter={StaticResource EnumStringConverter}, Mode=OneWay}" Padding="0" Margin="0" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Content="StopBits:" HorizontalAlignment="Left" Margin="19,117,0,0" VerticalAlignment="Top" Padding="0" />
+        <ComboBox HorizontalAlignment="Left" Margin="70,115,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableStopBits, Mode=OneWay}" SelectedItem="{Binding SelectedStopBits, Mode=TwoWay}">
+            <!--, Converter={StaticResource EnumStringConverter}, ConverterParameter={x:Static ports:StopBits.One}-->
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Converter={StaticResource EnumStringConverter}, Mode=OneWay}" Padding="0" Margin="0" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button Content="{Binding ConnectionString, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="20" Width="75" Margin="0,0,0,40" Command="{Binding ConnectionCommand}" />
+
+        <view:ConnectionStatusBar VerticalAlignment="Bottom" />
+    </Grid>
+</Window>

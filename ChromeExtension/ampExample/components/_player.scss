@@ -1,0 +1,15 @@
+/**
+ * This style is a modified copy of the amplitudejs blue-playlist example (https://521dimensions.com/open-source/amplitudejs/examples/blue-playlist).
+ */
+
+div#amplitude-player {
+  background: #ffffff;
+  box-shadow: 0 2px 12px 8px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+audio#player {
+  display: none;
+}

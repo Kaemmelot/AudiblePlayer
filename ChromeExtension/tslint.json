@@ -1,0 +1,29 @@
+{
+    "extends": [
+        "tslint:recommended",
+        "tslint-eslint-rules",
+        "tslint-config-prettier"
+    ],
+    "rules": {
+        "curly": {
+            "options": ["as-needed"],
+            "severity": "warning"
+        },
+        "quotemark": [true, "single", "jsx-single", "avoid-escape"],
+        "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration",
+            "member-variable-declaration", "object-destructuring", "array-destructuring"]
+    },
+    "jsRules": {
+        "curly": [true, "as-needed"],
+        "quotemark": [true, "single", "jsx-single", "avoid-escape"]
+    },
+    "linterOptions": {
+        "exclude": [
+            "node_modules/**/*.tsx",
+            "node_modules/**/*.ts",
+            "node_modules/**/*.jsx",
+            "node_modules/**/*.js",
+            "dist/*.js"
+        ]
+    }
+}

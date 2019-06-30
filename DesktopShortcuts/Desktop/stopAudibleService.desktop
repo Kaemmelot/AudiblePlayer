@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Link
+Name=Stop Audible Service
+Icon=/usr/share/icons/nuvola2/stop.png
+URL=/home/pi/.local/share/applications/stopAudibleService.desktop

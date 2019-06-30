@@ -1,0 +1,38 @@
+{
+  "name": "Audible Player Chromium Extension",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "This extension communicates with an external python script which controls an audible website remotely",
+  "background": {
+    "scripts": [
+      "dist/background.js"
+    ],
+    "persistent": true
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "permissions": [
+    "tabs",
+    "https://www.audible.com/cloudplayer*",
+    "https://www.audible.co.uk/cloudplayer*",
+    "https://www.audible.de/cloudplayer*",
+    "https://www.audible.fr/cloudplayer*",
+    "https://www.audible.com.au/cloudplayer*",
+    "https://www.audible.it/cloudplayer*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.audible.com/cloudplayer*",
+        "https://www.audible.co.uk/cloudplayer*",
+        "https://www.audible.de/cloudplayer*",
+        "https://www.audible.fr/cloudplayer*",
+        "https://www.audible.com.au/cloudplayer*",
+        "https://www.audible.it/cloudplayer*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "dist/inject.js"
+      ]
+    }
+  ]
+}

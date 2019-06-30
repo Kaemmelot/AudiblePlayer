@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Link
+Name=Shutdown
+Icon=/usr/share/icons/nuvola2/exit.png
+URL=/home/pi/.local/share/applications/shutdown.desktop

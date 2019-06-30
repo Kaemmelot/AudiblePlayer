@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=View Current Audible Log
+Comment=Live view of current Audible log
+GenericName=View Current Audible Log
+Icon=/usr/share/icons/nuvola2/package_editors.png
+Exec=termit --execute="bash -c 'tail -f /var/log/AudibleControl.log'"
+Terminal=false
+StartupNotify=true
+Categories=AudibleControl

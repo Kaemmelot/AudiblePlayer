@@ -1,0 +1,138 @@
+﻿<Window x:Class="RfidProgrammer.MainView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:view="clr-namespace:RfidProgrammer.MainView"
+        xmlns:prog="clr-namespace:RfidProgrammer"
+        mc:Ignorable="d"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        x:Name="CurrentWindow" WindowStartupLocation="CenterScreen"
+        Title="RFID-Programmer" Height="450" Width="800" MinWidth="460" MinHeight="250">
+    <Window.Resources>
+        <view:EnumBooleanConverter x:Key="EnumBooleanConverter" />
+        <view:ByteAsciiConverter x:Key="ByteAsciiConverter" />
+        <view:ByteToHexStringConverter x:Key="ByteToHexStringConverter" />
+        <view:RequiredLengthValidationRule x:Key="RequiredLength6ValidationRule" RequiredLength="6" />
+        <view:RequiredLengthValidationRule x:Key="RequiredLength12ValidationRule" RequiredLength="12" />
+        <Style TargetType="TextBox" x:Key="CueBannerBrushStyle" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+            <!--https://stackoverflow.com/a/7433840-->
+            <Style.Resources>
+                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                    <VisualBrush.Visual>
+                        <Label Content="Type here" Foreground="#FF404040" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Style.Resources>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                </Trigger>
+                <Trigger Property="Text" Value="{x:Null}">
+                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                </Trigger>
+                <Trigger Property="IsMouseCaptured" Value="True">
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <TabControl Margin="0,0,0,30">
+            <TabItem Header="Card Content">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Tag ID:" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Width="55" HorizontalContentAlignment="Right" Height="26" />
+                    <TextBox HorizontalAlignment="Left" Height="20" Margin="55,5,0,0" VerticalAlignment="Top" Width="98" IsReadOnly="True" MaxLines="1" MaxLength="11" Background="#FFCFCFCF" BorderBrush="Black" Foreground="Black" FontFamily="Courier New" FontSize="14" Text="{Binding Id, Mode=OneWay, Converter={StaticResource ByteToHexStringConverter}}" VerticalContentAlignment="Center" />
+                    <Label Content="Content:" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="55" Height="26" />
+                    <TextBox x:Name="ContentTextBox" Margin="55,30,10,50" AcceptsTab="True" MaxLength="{Binding MaxContentLength, Mode=OneTime}" TextChanged="ContentTextBox_TextChanged" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" KeyDown="ContentTextBox_KeyDown" IsEnabled="{Binding CardReady, Mode=OneWay}" Text="{Binding Content, Mode=TwoWay}" />
+                    <Label x:Name="LengthLabel" Content="0/?" HorizontalAlignment="Right" Margin="0,0,10,35" VerticalAlignment="Bottom" FontSize="10" Height="15" HorizontalContentAlignment="Right" Padding="0" Width="41" />
+                    <Button x:Name="WriteButton" Content="Write" HorizontalAlignment="Left" Margin="55,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding WriteCommand}" />
+                    <Button x:Name="EraseCard" Content="Erase Card" HorizontalAlignment="Left" Margin="135,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding EraseCardCommand}" />
+                    <Button x:Name="ReadButton" Content="Read" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ReadCommand}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Keys">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Key A:" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="48" Height="26" />
+                    <TextBox x:Name="KeyATextBox" Height="17" VerticalAlignment="Top" Width="56" VerticalScrollBarVisibility="Disabled" MaxLines="1" MaxLength="6" HorizontalAlignment="Left" Margin="48,4,0,0" IsEnabled="{Binding ConnectedAndReady, Mode=OneWay}" FontFamily="Courier New" FontSize="14">
+                        <TextBox.Text>
+                            <Binding Path="KeyA" Mode="TwoWay" Converter="{StaticResource ByteAsciiConverter}">
+                                <Binding.ValidationRules>
+                                    <StaticResource ResourceKey="RequiredLength6ValidationRule" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox x:Name="KeyAHexTextBox" Height="17" Margin="110,4,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Disabled" MaxLines="1" MaxLength="17" Width="150" HorizontalAlignment="Left" IsEnabled="{Binding ConnectedAndReady, Mode=OneWay}" FontFamily="Courier New" FontSize="14" CharacterCasing="Upper" TextChanged="FormatHex_TextChanged" PreviewKeyDown="FormattedHex_KeyDown">
+                        <TextBox.Text>
+                            <Binding Path="KeyA" Mode="TwoWay" Converter="{StaticResource ByteToHexStringConverter}">
+                                <Binding.ValidationRules>
+                                    <StaticResource ResourceKey="RequiredLength12ValidationRule" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <RadioButton x:Name="UseKeyA" HorizontalAlignment="Left" Margin="265,4,0,0" VerticalAlignment="Top" Height="17" VerticalContentAlignment="Center" GroupName="UsedKey" IsEnabled="{Binding ConnectedAndReady, Mode=OneWay}" IsChecked="{Binding SelectedKey, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static prog:SelectedKey.A}}" />
+                    <Label Content="Key B:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0" HorizontalContentAlignment="Right" Width="48" Height="26" />
+                    <TextBox x:Name="KeyBTextBox" Height="17" Margin="48,30,0,0" VerticalAlignment="Top" Width="56" VerticalScrollBarVisibility="Disabled" MaxLines="1" MaxLength="6" HorizontalAlignment="Left" IsEnabled="{Binding ConnectedAndReady, Mode=OneWay}" FontFamily="Courier New" FontSize="14">
+                        <TextBox.Text>
+                            <Binding Path="KeyB" Mode="TwoWay" Converter="{StaticResource ByteAsciiConverter}">
+                                <Binding.ValidationRules>
+                                    <StaticResource ResourceKey="RequiredLength6ValidationRule" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox x:Name="KeyBHexTextBox" Height="17" Margin="110,30,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Disabled" MaxLines="1" MaxLength="17" Width="150" HorizontalAlignment="Left" IsEnabled="{Binding ConnectedAndReady, Mode=OneWay}" FontFamily="Courier New" FontSize="14" CharacterCasing="Upper" TextChanged="FormatHex_TextChanged" PreviewKeyDown="FormattedHex_KeyDown">
+                        <TextBox.Text>
+                            <Binding Path="KeyB" Mode="TwoWay" Converter="{StaticResource ByteToHexStringConverter}">
+                                <Binding.ValidationRules>
+                                    <StaticResource ResourceKey="RequiredLength12ValidationRule" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <RadioButton x:Name="UseKeyB" HorizontalAlignment="Left" Margin="265,30,0,0" VerticalAlignment="Top" Height="17" VerticalContentAlignment="Center" GroupName="UsedKey" IsEnabled="{Binding ConnectedAndReady, Mode=OneWay}" IsChecked="{Binding SelectedKey, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static prog:SelectedKey.B}}" />
+                    <Label Content="Access:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,52,0,0" HorizontalContentAlignment="Right" Width="48" Height="26" />
+                    <TextBox x:Name="AccessHexTextBox" Height="17" Margin="110,57,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Disabled" MaxLength="11" MaxLines="1" Width="98" HorizontalAlignment="Left" IsEnabled="{Binding ConnectedAndReady, Mode=OneWay}" FontFamily="Courier New" FontSize="14" CharacterCasing="Upper" TextChanged="FormatHex_TextChanged" PreviewKeyDown="FormattedHex_KeyDown">
+                        <TextBox.Text>
+                            <Binding Path="AccessBits" Mode="TwoWay" Converter="{StaticResource ByteToHexStringConverter}">
+                                <Binding.ValidationRules>
+                                    <view:RequiredLengthValidationRule RequiredLength="8" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <Button x:Name="LoadButton" Content="Load" HorizontalAlignment="Left" Margin="10,0,0,35" VerticalAlignment="Bottom" Width="75" Command="{Binding LoadKeysCommand}" CommandParameter="{Binding ElementName=CurrentWindow}" />
+                    <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="90,0,0,35" VerticalAlignment="Bottom" Width="75" Command="{Binding SaveKeysCommand}" CommandParameter="{Binding ElementName=CurrentWindow}" />
+                    <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ResetAccessAndKeysCommand}" />
+                    <Button x:Name="ReadAccessBitsButton" Content="Read" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ReadAccessBitsCommand}" />
+                    <Button x:Name="CheckKeysButton" Content="Check Keys" HorizontalAlignment="Right" Margin="0,0,170,10" VerticalAlignment="Bottom" Width="75" Command="{Binding CheckKeysCommand}" />
+                    <Button x:Name="ChangeKeysButton" Content="Change Keys" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ChangeKeysCommand}" />
+                    <Button x:Name="UseKeysButton" Content="Use Keys" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Command="{Binding UseKeysCommand}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Console">
+                <Grid Background="#FFE5E5E5">
+                    <ScrollViewer Margin="0,0,0,24" HorizontalScrollBarVisibility="Auto" prog:AutoScrollBehavior.AutoScroll="true">
+                        <RichTextBox x:Name="ConsoleOutput" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" IsUndoEnabled="False" ScrollViewer.CanContentScroll="True" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                            <!-- https://stackoverflow.com/a/2634190/5516047 -->
+                            <FlowDocument x:Name="OutputDocument" PageWidth="{Binding ElementName=ConsoleOutput, Path=ActualWidth, Mode=OneWay}" />
+                        </RichTextBox>
+                    </ScrollViewer>
+                    <TextBox x:Name="ConsoleInput" Style="{StaticResource CueBannerBrushStyle}" Height="23" VerticalAlignment="Bottom" VerticalScrollBarVisibility="Disabled" MaxLines="1" MaxLength="256" VerticalContentAlignment="Center" Margin="0,0,75,0" Text="{Binding ConsoleInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Connected, Mode=OneWay}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding SendCommandCommand}" Key="Return" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Button x:Name="SendInputButton" Content="Send" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="73" Height="23" Margin="2,0,0,0" Command="{Binding SendCommandCommand}" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <view:ConnectionStatusBar VerticalAlignment="Bottom" ComClickAction="{Binding ComAction, ElementName=CurrentWindow}" DataContext="{Binding ConnectionViewModel, Mode=OneTime}" />
+    </Grid>
+</Window>

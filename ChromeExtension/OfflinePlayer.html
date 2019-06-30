@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--This page is a modified copy of the amplitudejs blue-playlist example (https://521dimensions.com/open-source/amplitudejs/examples/blue-playlist).-->
+    <title>Audio Book Offline Player</title>
+    
+    <link rel="stylesheet" type="text/css" href="dist/offPlayerStyle.css"/>
+    <script src="dist/offline.js" async="true"></script>
+	<script src="dist/offline-inject.js" async="true"></script>
+</head>
+<body>
+    <div class="grid-x" id="blue-playlist-container">
+		<div class="large-11 medium-11 small-9 large-centered medium-centered small-centered cell" id="amplitude-player">
+			<audio id="player"></audio>
+			<div class="grid-x">
+				<div class="large-shrink medium-6 small-12 cell" id="amplitude-left">
+				    <img id="cover-art"/>
+				</div>
+				<div class="large-auto medium-6 small-12 cell" id="amplitude-right">
+				    <!-- <div class="song amplitude-song-container" data-chapter="-1">
+				        <div class="song-now-playing-icon-container">
+				            <div class="play-button-container"></div>
+				            <div class="now-playing"></div>
+				        </div>
+				        <div class="song-meta-data">
+				            <span class="song-title">DetailedName</span>
+				            <span class="song-artist">Name</span>
+				        </div>
+				        <span class="song-duration">00:00:00</span>
+				        <span class="song-position">00:00:00</span>
+				    </div> -->
+				    </div>
+				    <div class="large-12 medium-12 small-12 cell" id="amplitude-bottom">
+				        <div id="time-container">
+				            <span id="current-time">
+				                <span class="amplitude-current-hours"></span>:<span class="amplitude-current-minutes"></span>:<span class="amplitude-current-seconds"></span>
+				        	</span>
+				        	<div id="progress-container">
+				          		<input type="range" value="0" class="amplitude-song-slider"/>
+				          		<progress value="0" id="song-played-progress" class="amplitude-song-played-progress"></progress>
+				          		<progress id="song-buffered-progress" class="amplitude-buffered-progress" value="1" max="1"></progress>
+				        	</div>
+				        	<span id="duration">
+				          		<span class="amplitude-duration-hours"></span>:<span class="amplitude-duration-minutes"></span>:<span class="amplitude-duration-seconds"></span>
+				        	</span>
+				      	</div>
+
+				      	<div id="control-container">
+				        	<div id="repeat-container">
+						  		<!-- <div class="amplitude-repeat" id="repeat"></div>
+				          		<div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div> -->
+							</div>
+
+				        	<div id="central-control-container">
+				          		<div id="central-controls">
+				            		<div class="amplitude-prev" id="previous"></div>
+				            		<div class="amplitude-play-pause amplitude-paused" id="play-pause"></div>
+				            		<div class="amplitude-next" id="next"></div>
+				          		</div>
+				        	</div>
+
+				        	<div id="volume-container">
+				          		<div class="volume-controls">
+				            		<div class="amplitude-mute amplitude-not-muted"></div>
+				            		<input type="range" class="amplitude-volume-slider"/>
+				            		<div class="ms-range-fix"></div>
+				          		</div>
+				        	</div>
+				    	</div>
+
+				    	<div id="meta-container">
+				        	<span class="file-name"></span>
+				        	<div class="file-desc"></div>
+						</div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
